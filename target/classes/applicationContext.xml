@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <context:component-scan base-package="com.stx" />
+    <!-- 读取db.properties配置 -->
+    <context:property-placeholder location="classpath:db.properties"/>
+
+    <!-- 数据源 -->
+    <bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${driverClass}" />
+        <property name="url" value="${jdbcUrl}" />
+        <property name="username" value="${user}" />
+        <property name="password" value="${password}" />
+    </bean>
+    <!-- sqlSessionFactory,mybatis-config.xml配置可以删除掉 -->
+    <bean name="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" >
+        <property name="dataSource" ref="dataSource" />
+        <!--
+        <typeAliases>
+            <package name="com.kaikeba.domain"/>
+        </typeAliases>
+        -->
+        <property name="typeAliasesPackage" value="com.stx.domain" />
+       <!-- 指定映射文件所在路径 -->
+        <property name="mapperLocations">
+            <array>
+                <value>classpath:mappers/*</value>
+            </array>
+        </property>
+        <property name="plugins">
+            <array>
+        <!-- 注册分页插件 -->
+                <bean class="com.github.pagehelper.PageInterceptor"/>
+            </array>
+        </property>
+    </bean>
+    <!-- 扫描Mapper接口,生成代理对象,并放入spring容器中
+          AccountMapper accountMapper = sqlSession.getMapper(AccountMapper.class);
+    -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" >
+        <property name="basePackage" value="com.stx.mapper" />
+    </bean>
+
+    <!-- 注解式aop事务 -->
+    <bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- 开启注解管理事务开关
+    <tx:annotation-driven />-->
+
+    <!-- 事务通知 -->
+    <tx:advice id="txAdvice" >
+        <tx:attributes>
+            <tx:method name="find*" read-only="true"/>
+            <tx:method name="save*" />
+            <tx:method name="update*" />
+            <tx:method name="delete*" />
+            <tx:method name="*" />
+        </tx:attributes>
+    </tx:advice>
+
+    <!-- aop事务切面 -->
+    <aop:config>
+        <!-- 切点配置:将所有service方法视为切点 -->
+        <aop:pointcut id="txPC" expression="execution(* com.stx.service..*ServiceImpl.*(..))"/>
+        <!-- 切面配置:切点+通知 -->
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPC"/>
+    </aop:config>
+
+
+</beans>
