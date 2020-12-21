@@ -1,11 +1,13 @@
 package com.stx;
 
-import com.stx.domain.Fine;
-import com.stx.mapper.FineMapper;
+import com.stx.domain.Employee;
+import com.stx.mapper.EmployeeMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+
+import java.util.List;
 
 /**
  * @Aythor :张国军
@@ -15,20 +17,49 @@ import org.springframework.test.context.ContextConfiguration;
 @RunWith(org.springframework.test.context.junit4.SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext.xml")
 public class MyBatisTest {
+//    @Autowired
+//    private FineMapper fineMapper;
+//
+//    @Test
+//    public void fun1(){
+//        Fine fine=new Fine();
+//        fine.setF_id(1);
+//        fine.setFid(1);
+//        fine.setAmount(1000);
+//        fine.setFine(1000);
+//        fineMapper.save(fine);
+//    }
     @Autowired
-    private FineMapper fineMapper;
+    private EmployeeMapper employeeMapper;
 
     @Test
-    public void fun1(){
-        Fine fine=new Fine();
-        fine.setF_id(1);
-        fine.setFid(1);
-        fine.setAmount(1000);
-        fine.setFine(1000);
-
-        fineMapper.save(fine);
+    public void getEmployee(){
+        List<Employee> employeeList = employeeMapper.getEmployeeList();
+        for (Employee employee : employeeList) {
+            System.out.println(employee);
+        }
     }
 
+    @Test
+    public void getEmployeeById(){
+        Employee employeeById = employeeMapper.getEmployeeById(1);
+        System.out.println(employeeById);
+    }
 
+    @Test
+    public void addEmployee(){
+        Employee employee = new Employee("1","1","1",5,"1","1","1","1","1");
+        employeeMapper.addEmployee(employee);
+    }
 
+    @Test
+    public void deleteEmployeeById(){
+        employeeMapper.deleteEmployeeById(10);
+    }
+
+    @Test
+    public void updateEmployeeById(){
+        Employee employee = new Employee(9,"1","1","1",25,"1","1","1","1","1");
+        employeeMapper.updateEmployeeById(employee);
+    }
 }
