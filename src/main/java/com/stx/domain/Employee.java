@@ -1,6 +1,10 @@
 package com.stx.domain;
 
+import java.util.List;
+
 /**
+ * 教师表
+ *
  * @author ChengXing
  * @Date Created in 19:56 2020/12/21
  * @Description stx
@@ -16,12 +20,13 @@ public class Employee {
     private String department;
     private String culturalProgram;
     private String jobTitle;
+    private List<Bonus> bonus;
+    private List<Fine> fines;
 
     public Employee() {
     }
 
-    public Employee( String name, String sex, String nation, Integer age, String position, String avatar, String department, String culturalProgram, String jobTitle) {
-
+    public Employee(String name, String sex, String nation, Integer age, String position, String avatar, String department, String culturalProgram, String jobTitle) {
         this.name = name;
         this.sex = sex;
         this.nation = nation;
@@ -123,7 +128,16 @@ public class Employee {
     }
 
     public void setJobTitle(String jobTitle) {
+
         this.jobTitle = jobTitle;
+    }
+
+    public List<Bonus> getBonus() {
+        return bonus;
+    }
+
+    public void setBonus(List<Bonus> bonus) {
+        this.bonus = bonus;
     }
 
     @Override
@@ -139,6 +153,8 @@ public class Employee {
                 ", department='" + department + '\'' +
                 ", culturalProgram='" + culturalProgram + '\'' +
                 ", jobTitle='" + jobTitle + '\'' +
+                ", bonus=" + bonus +
+                ", fines=" + fines +
                 '}';
     }
 }

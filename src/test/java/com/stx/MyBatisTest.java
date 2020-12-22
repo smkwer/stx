@@ -62,4 +62,16 @@ public class MyBatisTest {
         Employee employee = new Employee(9,"1","1","1",25,"1","1","1","1","1");
         employeeMapper.updateEmployeeById(employee);
     }
+
+    @Test
+    public void getEmployeeBonusById(){
+        List<Employee> employeeBonusById = employeeMapper.getEmployeeBonusById(1);
+        System.out.println(employeeBonusById);
+    }
+
+    @Test
+    public void getEmployeeFine(){
+        Employee employeeFineById = employeeMapper.getEmployeeFineById(1);
+        System.out.println(employeeFineById);
+    }
 }

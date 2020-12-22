@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 命名空间:指定为哪个Mapper接口做配置 -->
+<mapper namespace="com.stx.mapper.FineMapper">
+    <!-- 建立查询结果与实体(属性)之间的映射关系
+          id: 给映射配置起一个唯一的名字,方便后续引用
+          type: 指定映射到哪个实体上(可以使用别名)
+     -->
+
+    <!-- 接口方法配置
+            xml元素决定了方法的性质
+                select元素: 查询
+                insert元素: 插入
+                update元素: 删除|修改
+            id属性:映射方法名
+            resultType:返回结果的类型,注意:属性名必须与列名相对应
+            标签体:书写要执行的sql语句
+     -->
+    <insert id="addFineByEmployeeId" parameterType="Fine">
+        INSERT INTO fine
+        VALUES (NULL,#{fine},#{reason},#{id})
+    </insert>
+
+    <delete id="deleteFineById" parameterType="Fine">
+        delete from fine where f_id = #{id}
+    </delete>
+
+    <update id="updateFine" parameterType="Fine">
+        UPDATE fine
+        SET fine=#{fine},reason=#{reason},id=#{id}
+        WHERE f_id=#{fid}
+    </update>
+</mapper>

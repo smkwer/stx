@@ -41,4 +41,36 @@
         set name=#{name}, sex=#{sex}, nation=#{nation}, age=#{age}, position=#{position}, avatar=#{avatar}, department=#{department}, culturalProgram=#{culturalProgram}, jobTitle=#{jobTitle}
         where id=#{id}
     </update>
+
+    <select id="getEmployeeBonusById" resultMap="getEmployeeBonus">
+       SELECT e.id eid,e.name ename,b.amount bamount,b.reason breason
+       FROM bonus b,employee e
+       WHERE b.b_id = e.id
+       AND e.id = #{id}
+    </select>
+
+    <resultMap id="getEmployeeBonus" type="Employee">
+        <result property="id" column="eid"/>
+        <result property="name" column="ename"/>
+        <collection property="bonus" ofType="Bonus">
+            <result property="amount" column="bamount"/>
+            <result property="reason" column="breason"/>
+        </collection>
+    </resultMap>
+
+    <select id="getEmployeeFineById" resultMap="getEmployeeFine">
+       SELECT e.id eid,e.name ename,f.fine ffine,f.reason freason
+       FROM fine f,employee e
+       WHERE f.id = e.id
+       AND e.id = #{id}
+    </select>
+
+    <resultMap id="getEmployeeFine" type="Employee">
+        <result property="id" column="eid"/>
+        <result property="name" column="ename"/>
+        <collection property="fines" ofType="Fine">
+            <result property="fine" column="ffine"/>
+            <result property="reason" column="freason"/>
+        </collection>
+    </resultMap>
 </mapper>

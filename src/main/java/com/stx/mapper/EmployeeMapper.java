@@ -1,7 +1,6 @@
 package com.stx.mapper;
 
 import com.stx.domain.Employee;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -20,6 +19,7 @@ public interface EmployeeMapper {
 
     /**
      * 根据id查询老师
+     *
      * @param id
      * @return
      */
@@ -35,6 +35,7 @@ public interface EmployeeMapper {
 
     /**
      * 根据id删除老师
+     *
      * @param id
      * @return
      */
@@ -42,8 +43,25 @@ public interface EmployeeMapper {
 
     /**
      * 修改老师信息
+     *
      * @param employee
      * @return
      */
     int updateEmployeeById(Employee employee);
+
+    /**
+     * 根据id查询老师的信息和奖金
+     *
+     * @param id
+     * @return
+     */
+    List<Employee> getEmployeeBonusById(int id);
+
+    /**
+     * 根据id查询老师的信息和罚金
+     *
+     * @param id
+     * @return
+     */
+    Employee getEmployeeFineById(int id);
 }
