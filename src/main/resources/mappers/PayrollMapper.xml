@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stx.mapper.payrollMapper">
+    <insert id="insertPayroll" parameterType="domain.Payroll">
+        insert into Payroll value(#{pxid},#{wage});
+    </insert>
+
+    <delete id="deletePayroll" parameterType="domain.Payroll">
+        delete from Payroll where pxid=#{pxid};
+    </delete>
+
+    <update id="updatePayroll" parameterType="domain.Payroll">
+        update Payroll set wage=#{wage} where pxid=#{pxid};
+    </update>
+
+    <select id="findAll" resultType="domain.Payroll">
+         select * from Payroll
+    </select>
+
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        <!--namesoace=绑定一个对应的Dao/mapper接口-->
+<mapper namespace="com.stx.mapper.AddAndSubtractMapper">
+<cache eviction="FIFO" flushInterval="60000" size="512" readOnly="true"/><!--开启二级缓存-->
+<!--select查询语句-->
+<select id="getUserList" resultType="pojo.AddAndSubtract">
+       select * from mybatis.addandsubtract
+   </select>
+<insert id="add" parameterType="pojo.AddAndSubtract">
+        insert into mybatis.addandsubtract values(#{id,#{Asid},#{details},#{fraction})
+    </insert>
+<update id="update" parameterType="pojo.AddAndSubtract">
+        update mybatis.addandsubtract set id=#{id},aSid=#{Asid},details=#{details},fraction=#{fraction} where id=#{id}
+    </update>
+<delete id="delete" parameterType="String">
+        delete  from mybatis.addandsubtract where id =#{id}
+    </delete>
+</mapper>

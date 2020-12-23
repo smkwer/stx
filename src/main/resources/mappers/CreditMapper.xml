@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namesoace=绑定一个对应的Dao/mapper接口-->
+<mapper namespace="com.stx.mapper.CreditMapper">
+    <cache eviction="FIFO" flushInterval="60000" size="512" readOnly="true"/><!--开启二级缓存-->
+    <!--select查询语句-->
+    <select id="getUserList" resultType="pojo.Credit">
+       select * from mybatis.credit
+   </select>
+    <insert id="add" parameterType="pojo.Credit">
+        insert into mybatis.credit values(#{id,#{credit})
+    </insert>
+    <update id="update" parameterType="pojo.Credit">
+        update mybatis.credit set id=#{id},credit=#{credit} where id=#{id}
+    </update>
+    <delete id="delete" parameterType="String">
+        delete  from mybatis.credit where id =#{id}
+    </delete>
+</mapper>

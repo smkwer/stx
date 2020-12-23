@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namesoace=绑定一个对应的Dao/mapper接口-->
+<mapper namespace="com.stx.mapper.StudentMapper">
+    <cache eviction="FIFO" flushInterval="60000" size="512" readOnly="true"/><!--开启二级缓存-->
+    <!--select查询语句-->
+    <select id="getUserList" resultType="pojo.Student">
+       select * from mybatis.student
+   </select>
+    <insert id="add" parameterType="pojo.Student">
+        insert into mybatis.student values(#{id,#{name},#{MZ},#{sex},#{age},#{photo},#{position},#{department},#{grade})
+    </insert>
+    <update id="update" parameterType="pojo.Student">
+        update mybatis.student set id=#{id},name=#{name},MZ=#{MZ},sex=#{sex},age=#{age},photo=#{photo},position =#{position},department=#{department},grade=#{grade} where id=#{id}
+    </update>
+    <delete id="delete" parameterType="String">
+        delete  from mybatis.user where id =#{id}
+    </delete>
+</mapper>

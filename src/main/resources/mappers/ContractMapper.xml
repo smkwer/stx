@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namesoace=绑定一个对应的Dao/mapper接口-->
+<mapper namespace="com.stx.mapper.ContractMapper">
+    <cache eviction="FIFO" flushInterval="60000" size="512" readOnly="true"/><!--开启二级缓存-->
+    <!--select查询语句-->
+    <select id="getUserList" resultType="pojo.Contract">
+       select * from mybatis.contract
+   </select>
+    <insert id="add" parameterType="pojo.Contract">
+        insert into mybatis.contract values(#{id,#{wj})
+    </insert>
+    <update id="update" parameterType="pojo.Contract">
+        update mybatis.contract set id=#{id},wj=#{wj} where id=#{id}
+    </update>
+    <delete id="delete" parameterType="String">
+        delete  from mybatis.contract where id =#{id}
+    </delete>
+</mapper>
